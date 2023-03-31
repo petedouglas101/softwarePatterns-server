@@ -1,11 +1,14 @@
+require("./models/Customer");
 const express = require("express");
 const mongoDBConnection = require("./DatabaseConnection/MongoDBConnection");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(authRoutes);
 
 mongoDBConnection.connect().then(() => {
   console.log("Connected to MongoDB!");
