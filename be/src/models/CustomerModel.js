@@ -111,5 +111,5 @@ customerSchema.methods.comparePassword = function (customerPassword) {
   });
 };
 
-customerSchema.loadClass(require("../classes/Customer"));
+customerSchema.loadClass(require("../../../classes/Customer"));
 mongoose.model("Customer", customerSchema);
