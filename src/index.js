@@ -1,14 +1,17 @@
-require("./models/Customer");
+require("./models/CustomerModel");
 const express = require("express");
-const mongoDBConnection = require("./DatabaseConnection/MongoDBConnection");
+const mongoDBConnection = require("./databaseConnection/mongoDBConnection");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/authRoutes");
+const accountRoutes = require("./routes/accountRoutes");
+const requireAuth = require("./middlewares/requireAuth");
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(authRoutes);
+app.use(accountRoutes);
 
 mongoDBConnection.connect().then(() => {
   console.log("Connected to MongoDB!");
@@ -26,9 +29,9 @@ mongoDBConnection.connect().then(() => {
   });
 });
 
-// app.get("/", (req, res) => {
-//   res.send(`Your email: ${req.user.email}`);
-// });
+app.get("/", requireAuth, (req, res) => {
+  res.send(`Your email: ${req.user.email}`);
+});
 
 app.listen(3000, () => {
   console.log("Listening on port 3000");

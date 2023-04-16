@@ -8,5 +8,21 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
     "nodemon": "^2.0.22"
-  }
+  },
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petedouglas101/softwarePatterns-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/petedouglas101/softwarePatterns-server/issues"
+  },
+  "homepage": "https://github.com/petedouglas101/softwarePatterns-server#readme",
+  "description": ""
 }
