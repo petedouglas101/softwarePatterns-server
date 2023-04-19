@@ -1,8 +1,20 @@
-import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useContext } from "react";
+import { View, Text, StyleSheet, Button } from "react-native";
+import { Context as AccountContext } from "../context/AccountContext";
 
 const ProductScreen = () => {
-  return <View style={styles.container}></View>;
+  const { getEmail } = useContext(AccountContext);
+
+  return (
+    <View style={styles.container}>
+      <Button
+        onPress={() => {
+          getEmail({ email: "peter@email.com" });
+        }}
+        title="Get Email"
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

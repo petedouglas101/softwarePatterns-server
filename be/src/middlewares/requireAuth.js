@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const Customer = mongoose.model("Customer");
+const Administrator = mongoose.model("Administrator");
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -16,9 +17,18 @@ module.exports = (req, res, next) => {
     }
 
     const { customerId } = payload;
+    const { administratorId } = payload;
+
 
     const customer = await Customer.findById(customerId);
-    req.customer = customer;
-    next();
+    const administrator = await Administrator.findById(administratorId);
+
+    if (customer && !administrator) {
+      req.customer = customer;
+      next();
+    } else if (administrator && !customer) {
+      req.administrator = administrator;
+      next();
+    }
   });
 };

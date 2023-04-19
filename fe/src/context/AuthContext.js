@@ -3,7 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import createDataContext from "./createDataContext";
 import appApi from "../api/server";
 import * as RootNavigation from "../navigationRef";
-import CustomerModel from "../models/CustomerModel";
+import Customer from "../../classes/Customer";
+import User from "../../classes/User";
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -39,16 +40,19 @@ const clearErrorMessage = (dispatch) => {
 };
 
 const signup = (dispatch) => {
-  return async ({ email, password, firstName, lastName }) => {
-    const newCustomer = new CustomerModel(firstName, lastName, email, password);
-
+  return async (user) => {
     try {
+      const newUser = new User(user);
       const response = await appApi.post("/signup", {
-        newCustomer,
+        newUser,
       });
       await AsyncStorage.setItem("token", response.data.token);
       dispatch({ type: "signin", payload: response.data.token });
-      RootNavigation.navigate("MainFlowTabs");
+      if (response.data.user.role === "Customer") {
+        RootNavigation.navigate("MainFlowTabs");
+      } else {
+        RootNavigation.navigate("AdminFlowTabs");
+      }
     } catch (err) {
       dispatch({
         type: "add_error",
@@ -64,7 +68,11 @@ const signin = (dispatch) => {
       const response = await appApi.post("/signin", { email, password });
       await AsyncStorage.setItem("token", response.data.token);
       dispatch({ type: "signin", payload: response.data.token });
-      RootNavigation.navigate("MainFlowTabs");
+      if (response.data.customer) {
+        RootNavigation.navigate("MainFlowTabs");
+      } else {
+        RootNavigation.navigate("AdminFlowTabs");
+      }
     } catch (err) {
       dispatch({
         type: "add_error",

@@ -2,43 +2,37 @@ const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const Customer = mongoose.model("Customer");
+const Address = mongoose.model("Address");
 
 const router = express.Router();
 
-// const requireAuth = require("../middlewares/requireAuth");
+const requireAuth = require("../middlewares/requireAuth");
 
-// router.use(requireAuth);
-
-
+router.use(requireAuth);
 
 router.get("/email", async (req, res) => {
-    const { email } = req.query;
-    const customer = await Customer.findOne({ email });
+  const { email } = req.query;
+  const customer = await Customer.findOne({ email });
 
-    console.log(customer.toString())
-    res.send(customer);
+  res.send(customer);
 });
 
 router.post("/updateAddress", async (req, res) => {
-  const { addressLine1, addressLine2, postcode, country } = req.body;
-  if (!addressLine1 || !postcode || !country) {
+  const { newAddress } = req.body;
+  if (!newAddress) {
     return res
       .status(422)
       .send({ error: "Must provide addressLine1, postcode and country" });
   }
 
-  const address = {
-    addressLine1: addressLine1,
-    addressLine2: addressLine2,
-    postcode: postcode,
-    country: country,
-  };
+  const AddressModel = new Address(newAddress);
 
+  // refactor using mongoose
   const customer = await Customer.findOneAndUpdate(
     { _id: req.customer._id },
     {
       $set: {
-        address: address,
+        address: AddressModel,
       },
     }
   );
@@ -48,7 +42,6 @@ router.post("/updateAddress", async (req, res) => {
 
 router.post("/updateCardDetails", async (req, res) => {
   const { cardNumber, expiryDate, cvv } = req.body;
-  console.log(cardNumber, expiryDate, cvv);
   if (!cardNumber || !expiryDate || !cvv) {
     return res
       .status(422)
@@ -60,8 +53,6 @@ router.post("/updateCardDetails", async (req, res) => {
     expiryDate: expiryDate,
     cvv: cvv,
   };
-
-  
 
   const customer = await Customer.findOneAndUpdate(
     { _id: req.customer._id },

@@ -23,4 +23,5 @@ const addressSchema = new mongoose.Schema({
   },
 });
 
+addressSchema.loadClass(require("../../../fe/classes/Address.js"));
 mongoose.model("Address", addressSchema);

@@ -19,29 +19,6 @@ const cardDetailsSchema = new mongoose.Schema({
   },
 });
 
-const addressSchema = new mongoose.Schema({
-  addressLine1: {
-    type: String,
-    unique: false,
-    required: true,
-  },
-  addressLine2: {
-    type: String,
-    unique: false,
-    required: false,
-  },
-  postcode: {
-    type: String,
-    unique: false,
-    required: true,
-  },
-  country: {
-    type: String,
-    unique: false,
-    required: true,
-  },
-});
-
 const customerSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -62,9 +39,13 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    required: true,
+  },
   address: {
-    type: addressSchema,
-    required: false,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Address",
   },
   cardDetails: {
     type: cardDetailsSchema,
@@ -111,5 +92,5 @@ customerSchema.methods.comparePassword = function (customerPassword) {
   });
 };
 
-customerSchema.loadClass(require("../../../classes/Customer"));
+customerSchema.loadClass(require("../../../fe/classes/Customer.js"));
 mongoose.model("Customer", customerSchema);

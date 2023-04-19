@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { Text, Input, Button } from "@rneui/themed";
+import { Text, Input, Button, ButtonGroup } from "@rneui/themed";
 
 const AuthForm = ({
   errorMessage,
@@ -12,6 +12,9 @@ const AuthForm = ({
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const role = selectedIndex === 0 ? "Customer" : "Administrator";
 
   return (
     <>
@@ -64,10 +67,19 @@ const AuthForm = ({
       {errorMessage ? (
         <Text style={styles.errorMessage}>{errorMessage}</Text>
       ) : null}
+      {SignupScreen ? (
+        <ButtonGroup
+          buttons={["Customer", "Administrator"]}
+          selectedIndex={selectedIndex}
+          onPress={(index) => setSelectedIndex(index)}
+        />
+      ) : null}
       <View style={styles.buttonView}>
         <Button
           title={submitButtonText}
-          onPress={() => onSubmit({ email, password, firstName, lastName })}
+          onPress={() =>
+            onSubmit({ email, password, firstName, lastName, role })
+          }
           color={"#6699CC"}
         />
       </View>
