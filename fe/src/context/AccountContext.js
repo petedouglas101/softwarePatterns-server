@@ -35,10 +35,10 @@ const updateCardDetails = (dispatch) => {
 
 const updateAddress = (dispatch) => {
   return async (address) => {
-    const newAddress = new Address(address);
+    console.log("Address from context: ", address);
     try {
       const response = await appApi.post("/updateAddress", {
-        newAddress,
+        address,
       });
       dispatch({ type: "update_address", payload: response.data });
     } catch (err) {

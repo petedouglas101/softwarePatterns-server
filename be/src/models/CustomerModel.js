@@ -5,17 +5,33 @@ const cardDetailsSchema = new mongoose.Schema({
   cardNumber: {
     type: String,
     unique: false,
-    required: true,
   },
   expiryDate: {
     type: String,
     unique: false,
-    required: true,
   },
   cvv: {
     type: String,
     unique: false,
-    required: true,
+  },
+});
+
+const addressSchema = new mongoose.Schema({
+  addressLine1: {
+    type: String,
+    unique: false,
+  },
+  addressLine2: {
+    type: String,
+    unique: false,
+  },
+  postcode: {
+    type: String,
+    unique: false,
+  },
+  country: {
+    type: String,
+    unique: false,
   },
 });
 
@@ -23,33 +39,26 @@ const customerSchema = new mongoose.Schema({
   firstName: {
     type: String,
     unique: false,
-    required: true,
   },
   lastName: {
     type: String,
     unique: false,
-    required: true,
   },
   email: {
     type: String,
     unique: true,
-    required: true,
   },
   password: {
     type: String,
-    required: true,
   },
   role: {
     type: String,
-    required: true,
   },
   address: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Address",
+    type: addressSchema,
   },
   cardDetails: {
     type: cardDetailsSchema,
-    required: false,
   },
 });
 

@@ -18,21 +18,15 @@ router.get("/email", async (req, res) => {
 });
 
 router.post("/updateAddress", async (req, res) => {
-  const { newAddress } = req.body;
-  if (!newAddress) {
-    return res
-      .status(422)
-      .send({ error: "Must provide addressLine1, postcode and country" });
+  const { address } = req.body;
+  if (!address) {
+    return res.status(422).send({ error: "Must provide address" });
   }
-
-  const AddressModel = new Address(newAddress);
-
-  // refactor using mongoose
   const customer = await Customer.findOneAndUpdate(
     { _id: req.customer._id },
     {
       $set: {
-        address: AddressModel,
+        address: address,
       },
     }
   );

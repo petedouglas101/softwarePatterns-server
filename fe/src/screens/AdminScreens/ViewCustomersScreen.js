@@ -1,23 +1,94 @@
-//import liraries
-import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useContext } from "react";
+import { Context as AdminContext } from "../../context/AdminContext";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
+import { ListItem } from "@rneui/themed";
 
 // create a component
 const ViewCustomersScreen = () => {
+  const { state, getCustomers } = useContext(AdminContext);
+
   return (
-    <View style={styles.container}>
-      <Text>ViewCustomersScreen</Text>
+    <View style={styles.root}>
+      <View>
+        <Text style={styles.headline}>Customers</Text>
+        <FlatList
+          data={state}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  console.log(item);
+                }}
+              >
+                <ListItem style={styles.listItem}>
+                  <ListItem.Content>
+                    <ListItem.Title style={styles.title}>
+                      {item.firstName + " " + item.lastName}
+                    </ListItem.Title>
+                    <ListItem.Subtitle style={styles.subtitle}>
+                      {item.email}
+                    </ListItem.Subtitle>
+                  </ListItem.Content>
+                  <ListItem.Chevron />
+                </ListItem>
+              </TouchableOpacity>
+            );
+          }}
+        />
+        <Button title="Refresh" onPress={getCustomers} style={styles.button} />
+      </View>
     </View>
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
-  container: {
+  root: {
+    borderRadius: 5,
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#2c3e50",
+    backgroundColor: "#5A5A5A",
+  },
+
+  button: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+    backgroundColor: "#6699CC",
+    alignSelf: "center",
+    elevation: 5,
+    marginBottom: 20,
+  },
+  subtitle: {
+    fontSize: 14,
+    marginTop: 3,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  listItem: {
+    borderBottomColor: "#cccccc",
+    borderBottomWidth: 1,
+  },
+  headline: {
+    fontSize: 20,
+    fontWeight: "bold",
+    alignSelf: "center",
+    marginBottom: 10,
+    color: "#cccccc",
+  },
+  overall: {
+    flex: 1,
+    backgroundColor: "#5A5A5A",
+    marginTop: 30,
   },
 });
 
