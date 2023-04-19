@@ -25,4 +25,21 @@ router.get("/getCustomers", async (req, res) => {
   res.send(customers);
 });
 
+router.post("/updateStock", async (req, res) => {
+  const { product } = req.body;
+  console.log(product);
+
+  //find product by title and updtate stock
+  const productModel = await ProductModel.findOneAndUpdate(
+    { productName: product.productName },
+    {
+      $set: {
+        amount: product.amount,
+      },
+    }
+  );
+
+  res.send({ message: "Stock updated" });
+});
+
 module.exports = router;

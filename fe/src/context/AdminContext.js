@@ -26,6 +26,18 @@ const addProduct = (dispatch) => {
   };
 };
 
+const updateStock = (dispatch) => {
+  return async (product) => {
+    try {
+      const response = await appApi.post("/updateStock", {
+        product,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 const getCustomers = (dispatch) => {
   return async () => {
     try {
@@ -40,6 +52,6 @@ const getCustomers = (dispatch) => {
 
 export const { Provider, Context } = createDataContext(
   adminReducer,
-  { addProduct, getCustomers },
+  { addProduct, getCustomers, updateStock },
   {}
 );

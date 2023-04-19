@@ -5,7 +5,7 @@ import { Context as AdminContext } from "../../context/AdminContext";
 
 // create a component
 const AddProductScreen = () => {
-  const { state, addProduct } = useContext(AdminContext);
+  const { state, addProduct, updateStock } = useContext(AdminContext);
   const [productName, setProductName] = useState("");
   const [manufacturerName, setManufacturerName] = useState("");
   const [productCategory, setProductCategory] = useState("");
@@ -65,6 +65,12 @@ const AddProductScreen = () => {
             productImage,
             amount,
           });
+        }}
+      />
+      <Button
+        title="Update Stock"
+        onPress={() => {
+          updateStock({ productName, amount });
         }}
       />
     </View>
