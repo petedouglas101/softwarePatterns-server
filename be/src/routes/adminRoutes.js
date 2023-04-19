@@ -10,12 +10,11 @@ const router = express.Router();
 router.post("/addProduct", async (req, res) => {
   const { newProduct } = req.body;
   const product = new Product(newProduct);
-  console.log(product);
   if (!newProduct) {
     return res.status(422).send({ error: "Must provide product details" });
   }
 
-  const productModel = new ProductModel(product);
+  const productModel = new ProductModel(newProduct);
   await productModel.save();
   res.send({ message: "Product added" });
 });
@@ -23,13 +22,11 @@ router.post("/addProduct", async (req, res) => {
 router.get("/getCustomers", async (req, res) => {
   const customers = await CustomerModel.find({});
   const customer = new CustomerModel(customers[0]);
-  console.log(customer.toString());
   res.send(customers);
 });
 
 router.post("/updateStock", async (req, res) => {
   const { product } = req.body;
-  console.log(product);
 
   //find product by title and updtate stock
   const productModel = await ProductModel.findOneAndUpdate(

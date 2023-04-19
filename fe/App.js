@@ -13,6 +13,7 @@ import AddProductScreen from "./src/screens/AdminScreens/AddProductScreen";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { Provider as AccountProvider } from "./src/context/AccountContext";
 import { Provider as AdminProvider } from "./src/context/AdminContext";
+import { Provider as OrderProvider } from "./src/context/OrderContext";
 import { navigationRef } from "./src/navigationRef";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { StatusBar } from "expo-status-bar";
@@ -113,30 +114,35 @@ const RootNavigation = navigationRef;
 
 export default function App() {
   return (
-    <AdminProvider>
-      <AccountProvider>
-        <AuthProvider>
-          <StatusBar />
-          <NavigationContainer ref={navigationRef}>
-            <AuthStack.Navigator
-              screenOptions={{
-                headerStyle: { backgroundColor: "#6699CC" },
-                contentStyle: { backgroundColor: "#5A5A5A" },
-                headerTintColor: "#36454F",
-              }}
-            >
-              <AuthStack.Screen name="Signup" component={SignupScreen} />
-              <AuthStack.Screen name="Signin" component={SigninScreen} />
-              <AuthStack.Screen name="MainFlowTabs" component={MainFlowTabs} />
-              <AuthStack.Screen
-                name="AdminFlowTabs"
-                component={AdminFlowTabs}
-              />
-            </AuthStack.Navigator>
-          </NavigationContainer>
-          <StatusBar style="auto" />
-        </AuthProvider>
-      </AccountProvider>
-    </AdminProvider>
+    <OrderProvider>
+      <AdminProvider>
+        <AccountProvider>
+          <AuthProvider>
+            <StatusBar />
+            <NavigationContainer ref={navigationRef}>
+              <AuthStack.Navigator
+                screenOptions={{
+                  headerStyle: { backgroundColor: "#6699CC" },
+                  contentStyle: { backgroundColor: "#5A5A5A" },
+                  headerTintColor: "#36454F",
+                }}
+              >
+                <AuthStack.Screen name="Signup" component={SignupScreen} />
+                <AuthStack.Screen name="Signin" component={SigninScreen} />
+                <AuthStack.Screen
+                  name="MainFlowTabs"
+                  component={MainFlowTabs}
+                />
+                <AuthStack.Screen
+                  name="AdminFlowTabs"
+                  component={AdminFlowTabs}
+                />
+              </AuthStack.Navigator>
+            </NavigationContainer>
+            <StatusBar style="auto" />
+          </AuthProvider>
+        </AccountProvider>
+      </AdminProvider>
+    </OrderProvider>
   );
 }

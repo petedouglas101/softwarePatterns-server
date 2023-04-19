@@ -1,14 +1,15 @@
 require("./models/CustomerModel");
 require("./models/AdministratorModel");
-require("./models/AddressModel");
 require("./models/ProductModel");
+require("./models/OrderModel");
 const express = require("express");
 const mongoDBConnection = require("./databaseConnection/mongoDBConnection");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/authRoutes");
 const accountRoutes = require("./routes/accountRoutes");
-const adminRoutes = require("./routes/adminRoutes");
+const adminRoutes = require("./routes/AdminRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 const requireAuth = require("./middlewares/requireAuth");
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 app.use(authRoutes);
 app.use(accountRoutes);
 app.use(adminRoutes);
+app.use(orderRoutes);
 
 mongoDBConnection.connect().then(() => {
   console.log("Connected to MongoDB!");

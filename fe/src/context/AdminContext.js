@@ -42,7 +42,6 @@ const getCustomers = (dispatch) => {
   return async () => {
     try {
       const response = await appApi.get("/getCustomers");
-      console.log(response.data);
       dispatch({ type: "get_customers", payload: response.data });
     } catch (err) {
       console.log(err);

@@ -2,8 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const Customer = mongoose.model("Customer");
-const Address = mongoose.model("Address");
-
 const router = express.Router();
 
 const requireAuth = require("../middlewares/requireAuth");

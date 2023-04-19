@@ -23,11 +23,7 @@ const ViewCustomersScreen = () => {
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity
-                onPress={() => {
-                  console.log(item);
-                }}
-              >
+              <TouchableOpacity onPress={() => {}}>
                 <ListItem style={styles.listItem}>
                   <ListItem.Content>
                     <ListItem.Title style={styles.title}>
