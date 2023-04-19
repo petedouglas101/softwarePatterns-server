@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const orderSchema = require("./OrderModel.js");
 
 const cardDetailsSchema = new mongoose.Schema({
   cardNumber: {
@@ -60,6 +61,12 @@ const customerSchema = new mongoose.Schema({
   cardDetails: {
     type: cardDetailsSchema,
   },
+  previousOrders: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Order",
+    },
+  ],
 });
 
 customerSchema.pre("save", function (next) {

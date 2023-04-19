@@ -22,6 +22,8 @@ router.post("/addProduct", async (req, res) => {
 
 router.get("/getCustomers", async (req, res) => {
   const customers = await CustomerModel.find({});
+  const customer = new CustomerModel(customers[0]);
+  console.log(customer.toString());
   res.send(customers);
 });
 
