@@ -9,10 +9,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { ListItem } from "@rneui/themed";
+import * as RootNavigation from "../../navigationRef";
 
 // create a component
 const ViewCustomersScreen = () => {
   const { state, getCustomers } = useContext(AdminContext);
+
+  console.log("Customers from ViewCustomersScreen: ", state);
 
   return (
     <View style={styles.root}>
@@ -23,7 +26,11 @@ const ViewCustomersScreen = () => {
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity
+                onPress={() => {
+                  RootNavigation.navigate("CustomerDetailsScreen", { item });
+                }}
+              >
                 <ListItem style={styles.listItem}>
                   <ListItem.Content>
                     <ListItem.Title style={styles.title}>

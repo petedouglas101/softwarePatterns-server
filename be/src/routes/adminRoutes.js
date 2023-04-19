@@ -4,6 +4,7 @@ const ProductModel = mongoose.model("Product");
 const CustomerModel = mongoose.model("Customer");
 const Product = require("../../../fe/classes/Product.js");
 const Customer = require("../../../fe/classes/Customer.js");
+const util = require("util");
 
 const router = express.Router();
 
@@ -20,8 +21,11 @@ router.post("/addProduct", async (req, res) => {
 });
 
 router.get("/getCustomers", async (req, res) => {
-  const customers = await CustomerModel.find({});
-  const customer = new CustomerModel(customers[0]);
+  const customers = await CustomerModel.find()
+    .populate("previousOrders")
+    .lean()
+    .exec();
+  console.log("Customers:", util.inspect(customers, { depth: null }));
   res.send(customers);
 });
 

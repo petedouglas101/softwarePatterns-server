@@ -10,6 +10,7 @@ import CartScreen from "./src/screens/CartScreen";
 import ViewProductsScreen from "./src/screens/AdminScreens/ViewProductsScreen";
 import ViewCustomersScreen from "./src/screens/AdminScreens/ViewCustomersScreen";
 import AddProductScreen from "./src/screens/AdminScreens/AddProductScreen";
+import CustomerDetailsScreen from "./src/screens/AdminScreens/CustomerDetailsScreen";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { Provider as AccountProvider } from "./src/context/AccountContext";
 import { Provider as AdminProvider } from "./src/context/AdminContext";
@@ -136,6 +137,10 @@ export default function App() {
                 <AuthStack.Screen
                   name="AdminFlowTabs"
                   component={AdminFlowTabs}
+                />
+                <AuthStack.Screen
+                  name="CustomerDetailsScreen"
+                  component={CustomerDetailsScreen}
                 />
               </AuthStack.Navigator>
             </NavigationContainer>

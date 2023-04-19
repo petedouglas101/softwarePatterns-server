@@ -20,10 +20,21 @@ router.get("/getProducts", async (req, res) => {
 router.post("/submitOrder", async (req, res) => {
   console.log("submitOrderRoute");
   const { productsInCart } = req.body;
+  console.log(productsInCart);
   const customer = await CustomerModel.findOne({ _id: req.customer._id });
+  //new products array with just product name and price
+  const products = productsInCart.map((product) => {
+    return {
+      productName: product.productName,
+      productPrice: product.productPrice,
+    };
+  });
+
+  console.log("products:", products);
+
   const newOrder = new OrderModel({
     customer: customer,
-    products: productsInCart,
+    products: products,
   });
   //add order to customer previous orders and save
   customer.previousOrders.push(newOrder);
